@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .footer-heading {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: #3498db;
+        }
+        
+        .contact-info i {
+            color: #3498db;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">🏥 MedManager</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'staff_dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'patient-list' %}">Patients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'doctor-list' %}">Doctors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'appointment-list' %}">Appointments</a>
+                </li>
+                {% endif %}
+            </ul>
+            
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        👤 {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'staff_dashboard' %}">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'password_reset' %}">Change Password</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'staff_logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'staff_login' %}">Staff Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'staff_signup' %}">Sign Up</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Section -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="footer-heading">🏥 MedManager</h5>
+                    <p class="mb-4">A modern hospital management system designed to streamline healthcare operations, improve patient care, and enhance administrative efficiency.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="{% url 'home' %}">Home</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="mb-2"><a href="{% url 'patient-list' %}">Patients</a></li>
+                        <li class="mb-2"><a href="{% url 'doctor-list' %}">Doctors</a></li>
+                        <li class="mb-2"><a href="{% url 'appointment-list' %}">Appointments</a></li>
+                        <li class="mb-2"><a href="{% url 'search-patients' %}">Search Patients</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-heading">Our Services</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Patient Management</a></li>
+                        <li class="mb-2"><a href="#">Doctor Scheduling</a></li>
+                        <li class="mb-2"><a href="#">Appointment Booking</a></li>
+                        <li class="mb-2"><a href="#">Medical Records</a></li>
+                        <li class="mb-2"><a href="#">Billing System</a></li>
+                        <li class="mb-2"><a href="#">Reports & Analytics</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <div class="contact-info">
+                        <p class="mb-3">
+                            <i class="fas fa-map-marker-alt"></i>
+                            123 Healthcare Street, Medical City
+                        </p>
+                        <p class="mb-3">
+                            <i class="fas fa-phone"></i>
+                            +1 (555) 123-4567
+                        </p>
+                        <p class="mb-3">
+                            <i class="fas fa-envelope"></i>
+                            info@medmanager.com
+                        </p>
+                        <p class="mb-3">
+                            <i class="fas fa-clock"></i>
+                            Mon-Fri: 8:00 AM - 6:00 PM
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 text-md-start text-center mb-2">
+                        <p class="mb-0">&copy; 2024 MedManager. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end text-center">
+                        <a href="#" class="text-light me-3">Privacy Policy</a>
+                        <a href="#" class="text-light me-3">Terms of Service</a>
+                        <a href="#" class="text-light">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome Icons  -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

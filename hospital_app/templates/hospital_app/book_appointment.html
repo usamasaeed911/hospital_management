@@ -1,0 +1,107 @@
+{% extends 'hospital_app/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card feature-card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📅 Book New Appointment</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Patient Selection -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">👤 Select Patient</h5>
+                            <select name="patient_id" class="form-select form-select-lg" required>
+                                <option value="">Select Patient</option>
+                                {% for patient in patients %}
+                                <option value="{{ patient.id }}">
+                                    {{ patient.patient_id }} - {{ patient.first_name }} {{ patient.last_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">Choose the patient for this appointment</div>
+                        </div>
+
+                        <!-- Doctor Selection -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">👨‍⚕️ Select Doctor</h5>
+                            <select name="doctor_id" class="form-select form-select-lg" required>
+                                <option value="">Select Doctor</option>
+                                {% for doctor in doctors %}
+                                <option value="{{ doctor.id }}">
+                                    Dr. {{ doctor.first_name }} {{ doctor.last_name }} - {{ doctor.specialization }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">Choose the doctor for consultation</div>
+                        </div>
+
+                        <!-- Date and Time -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5 class="text-primary mb-3">📅 Appointment Date</h5>
+                                <input type="date" name="appointment_date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-primary mb-3">⏰ Time Slot</h5>
+                                <select name="time_slot" class="form-select" required>
+                                    <option value="">Select Time</option>
+                                    <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+                                    <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                                    <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+                                    <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+                                    <option value="03:00 PM - 04:00 PM">03:00 PM - 04:00 PM</option>
+                                    <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Details -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">📝 Appointment Details</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Purpose of Visit *</label>
+                                <select name="purpose" class="form-select" required>
+                                    <option value="">Select Purpose</option>
+                                    <option value="General Checkup">General Checkup</option>
+                                    <option value="Follow-up">Follow-up</option>
+                                    <option value="Consultation">Consultation</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Lab Test">Lab Test</option>
+                                    <option value="Vaccination">Vaccination</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Additional Notes</label>
+                                <textarea name="notes" class="form-control" rows="3" placeholder="Any specific symptoms, concerns, or special requirements..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Confirmation -->
+                        <div class="alert alert-info">
+                            <h6 class="alert-heading">📋 Appointment Information</h6>
+                            <small>
+                                • Appointment ID will be auto-generated<br>
+                                • Status will be set to "Scheduled"<br>
+                                • Patient and doctor will be notified<br>
+                                • Cancellation allowed up to 2 hours before appointment
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">✅ Book Appointment</button>
+                            <a href="{% url 'appointment-list' %}" class="btn btn-outline-secondary">View All Appointments</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

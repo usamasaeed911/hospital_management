@@ -1,0 +1,58 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Patients | Hospital Management Admin{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; Patients
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <h2>Patients</h2>
+
+    <div class="actions">
+        {% if has_add_permission %}
+        <a href="{% url 'admin:hospital_app_patient_add' %}" class="addlink">Add Patient</a>
+        {% endif %}
+    </div>
+
+    <div class="results">
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>Blood Group</th>
+                    <th>Registration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr class="{% cycle 'row1' 'row2' %}">
+                    <td>{{ patient.patient_id }}</td>
+                    <td>{{ patient.first_name }}</td>
+                    <td>{{ patient.last_name }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.phone }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td>{{ patient.blood_group }}</td>
+                    <td>{{ patient.registration_date|date:"M d, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">No patients found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

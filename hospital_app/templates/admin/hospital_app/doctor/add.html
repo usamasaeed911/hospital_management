@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Add Doctor | Hospital Management Admin{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:hospital_app_doctor_changelist' %}">Doctors</a>
+    &rsaquo; Add Doctor
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <h2>Add Doctor</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-row">
+            <div class="fieldBox">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" id="first_name" required>
+            </div>
+
+            <div class="fieldBox">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="fieldBox">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <div class="fieldBox">
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="fieldBox">
+                <label for="specialization">Specialization:</label>
+                <input type="text" name="specialization" id="specialization" required>
+            </div>
+
+            <div class="fieldBox">
+                <label for="department">Department:</label>
+                <input type="text" name="department" id="department" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="fieldBox">
+                <label for="qualification">Qualification:</label>
+                <input type="text" name="qualification" id="qualification" required>
+            </div>
+
+            <div class="fieldBox">
+                <label for="experience">Experience (years):</label>
+                <input type="number" name="experience" id="experience" min="0" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="fieldBox">
+                <label for="consultation_fee">Consultation Fee:</label>
+                <input type="number" name="consultation_fee" id="consultation_fee" step="0.01" min="0" required>
+            </div>
+        </div>
+
+        <div class="submit-row">
+            <input type="submit" value="Save" class="default">
+            <a href="{% url 'admin:hospital_app_doctor_changelist' %}" class="cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

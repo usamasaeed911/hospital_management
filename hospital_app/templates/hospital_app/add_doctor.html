@@ -1,0 +1,111 @@
+{% extends 'hospital_app/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card feature-card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Add New Doctor</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" name="first_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name *</label>
+                                    <input type="text" name="last_name" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email *</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Phone *</label>
+                                    <input type="tel" name="phone" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Specialization *</label>
+                                    <select name="specialization" class="form-control" required>
+                                        <option value="">Select Specialization</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Dermatology">Dermatology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Gynecology">Gynecology</option>
+                                        <option value="Oncology">Oncology</option>
+                                        <option value="Psychiatry">Psychiatry</option>
+                                        <option value="Dentistry">Dentistry</option>
+                                        <option value="General Physician">General Physician</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Department *</label>
+                                    <select name="department" class="form-control" required>
+                                        <option value="">Select Department</option>
+                                        <option value="Emergency">Emergency</option>
+                                        <option value="OPD">Outpatient (OPD)</option>
+                                        <option value="Surgery">Surgery</option>
+                                        <option value="ICU">Intensive Care Unit</option>
+                                        <option value="Radiology">Radiology</option>
+                                        <option value="Pathology">Pathology</option>
+                                        <option value="Pharmacy">Pharmacy</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Qualification *</label>
+                                    <input type="text" name="qualification" class="form-control" placeholder="MBBS, MD, MS, etc." required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Experience (Years) *</label>
+                                    <input type="number" name="experience" class="form-control" min="0" max="50" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Consultation Fee ($) *</label>
+                            <input type="number" name="consultation_fee" class="form-control" step="0.01" min="0" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Add Doctor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

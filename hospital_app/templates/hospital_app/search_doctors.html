@@ -1,0 +1,108 @@
+{% extends 'hospital_app/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Search Header with Filters -->
+    <div class="card feature-card mb-4">
+        <div class="card-body">
+            <h2 class="text-primary mb-4">👨‍⚕️ Search Doctors</h2>
+            <form method="get" action="{% url 'search-doctors' %}" class="row g-3">
+                <div class="col-md-6">
+                    <input type="text" name="q" class="form-control" 
+                           placeholder="Search by name, specialization, or ID..." 
+                           value="{{ query }}">
+                </div>
+                <div class="col-md-3">
+                    <select name="specialization" class="form-select">
+                        <option value="">All Specializations</option>
+                        {% for spec in specializations %}
+                        <option value="{{ spec }}" {% if spec == selected_specialization %}selected{% endif %}>
+                            {{ spec }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="department" class="form-select">
+                        <option value="">All Departments</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept }}" {% if dept == selected_department %}selected{% endif %}>
+                            {{ dept }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-8 mt-2">
+                    <small class="text-muted">
+                        Found <strong>{{ total_results }}</strong> doctors
+                        {% if query %}matching "<strong>{{ query }}</strong>"{% endif %}
+                        {% if selected_specialization %}in <strong>{{ selected_specialization }}</strong>{% endif %}
+                    </small>
+                </div>
+                <div class="col-md-2 mt-2">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+                <div class="col-md-2 mt-2">
+                    <a href="{% url 'search-doctors' %}" class="btn btn-outline-secondary w-100">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Results -->
+    {% if doctors %}
+    <div class="row">
+        {% for doctor in doctors %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge bg-primary">{{ doctor.specialization }}</span>
+                        <span class="badge bg-success">{{ doctor.availability }}</span>
+                    </div>
+                    
+                    <h5 class="card-title">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ doctor.qualification }}</h6>
+                    
+                    <p class="card-text small">
+                        <strong>🏥 Department:</strong> {{ doctor.department }}<br>
+                        <strong>📅 Experience:</strong> {{ doctor.experience }} years<br>
+                        <strong>💰 Fee:</strong> ${{ doctor.consultation_fee }}<br>
+                        <strong>📞 Contact:</strong> {{ doctor.phone }}
+                    </p>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">ID: {{ doctor.doctor_id }}</small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="btn-group w-100">
+                        <button class="btn btn-outline-primary btn-sm">Profile</button>
+                        <a href="{% url 'book-appointment' %}" class="btn btn-outline-success btn-sm">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% elif query or selected_specialization or selected_department %}
+    <div class="text-center py-5">
+        <div style="font-size: 4rem;">👨‍⚕️</div>
+        <h4>No Doctors Found</h4>
+        <p class="text-muted">No doctors found matching your search criteria</p>
+        <a href="{% url 'doctor-list' %}" class="btn btn-primary">View All Doctors</a>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div style="font-size: 4rem;">🔍</div>
+        <h4>Find Doctors</h4>
+        <p class="text-muted">Use the search and filters above to find doctors</p>
+        <div class="d-flex justify-content-center gap-2">
+            <a href="{% url 'doctor-list' %}" class="btn btn-primary">View All Doctors</a>
+            <a href="{% url 'add-doctor' %}" class="btn btn-outline-primary">Add New Doctor</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Doctors | Hospital Management Admin{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; Doctors
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <h2>Doctors</h2>
+
+    <div class="actions">
+        {% if has_add_permission %}
+        <a href="{% url 'admin:hospital_app_doctor_add' %}" class="addlink">Add Doctor</a>
+        {% endif %}
+    </div>
+
+    <div class="results">
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Specialization</th>
+                    <th>Department</th>
+                    <th>Experience</th>
+                    <th>Consultation Fee</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr class="{% cycle 'row1' 'row2' %}">
+                    <td>{{ doctor.doctor_id }}</td>
+                    <td>{{ doctor.first_name }}</td>
+                    <td>{{ doctor.last_name }}</td>
+                    <td>{{ doctor.specialization }}</td>
+                    <td>{{ doctor.department }}</td>
+                    <td>{{ doctor.experience }} years</td>
+                    <td>${{ doctor.consultation_fee }}</td>
+                    <td>{{ doctor.status }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">No doctors found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

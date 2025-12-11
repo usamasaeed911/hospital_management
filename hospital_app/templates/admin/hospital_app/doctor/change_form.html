@@ -1,0 +1,104 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Change Doctor | Hospital Management Admin{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:hospital_app_doctor_changelist' %}">Doctors</a>
+    &rsaquo; Change Doctor
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <h2>Change Doctor</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <fieldset class="module aligned">
+            <h3>Personal Information</h3>
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ doctor.first_name }}" required>
+                </div>
+                <div class="fieldBox">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ doctor.last_name }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ doctor.email }}" required>
+                </div>
+                <div class="fieldBox">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" name="phone" value="{{ doctor.phone }}" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="module aligned">
+            <h3>Professional Information</h3>
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="specialization">Specialization:</label>
+                    <input type="text" id="specialization" name="specialization" value="{{ doctor.specialization }}" required>
+                </div>
+                <div class="fieldBox">
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department" value="{{ doctor.department }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="qualification">Qualification:</label>
+                    <input type="text" id="qualification" name="qualification" value="{{ doctor.qualification }}" required>
+                </div>
+                <div class="fieldBox">
+                    <label for="experience">Experience (years):</label>
+                    <input type="number" id="experience" name="experience" value="{{ doctor.experience }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="consultation_fee">Consultation Fee:</label>
+                    <input type="number" step="0.01" id="consultation_fee" name="consultation_fee" value="{{ doctor.consultation_fee }}" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="module aligned">
+            <h3>System Information</h3>
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="availability">Availability:</label>
+                    <select id="availability" name="availability">
+                        <option value="Available" {% if doctor.availability == 'Available' %}selected{% endif %}>Available</option>
+                        <option value="Not Available" {% if doctor.availability == 'Not Available' %}selected{% endif %}>Not Available</option>
+                    </select>
+                </div>
+                <div class="fieldBox">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="Active" {% if doctor.status == 'Active' %}selected{% endif %}>Active</option>
+                        <option value="Inactive" {% if doctor.status == 'Inactive' %}selected{% endif %}>Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="submit-row">
+            <input type="submit" value="Save" class="default">
+            <a href="{% url 'admin:hospital_app_doctor_changelist' %}" class="cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends 'hospital_app/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'images/hospital-hero-bg.jpg' %}'); background-size: cover; background-position: center;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold">Hospital Management System</h1>
+                <p class="lead">Streamline hospital operations with our comprehensive management platform</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'patient-list' %}" class="btn btn-light btn-lg">Manage Patients</a>
+                    <a href="{% url 'add-patient' %}" class="btn btn-primary btn-lg">Add Patient</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="container my-5">
+    <div class="row text-center">
+        <div class="col-md-3 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <h2 class="text-primary">{{ total_patients }}+</h2>
+                    <p class="text-muted">Total Patients</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <h2 class="text-primary">{{ total_doctors }}+</h2>
+                    <p class="text-muted">Expert Doctors</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <h2 class="text-primary">{{ today_appointments }}+</h2>
+                    <p class="text-muted">Today's Appointments</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <h2 class="text-primary">24/7</h2>
+                    <p class="text-muted">Healthcare Service</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="container my-5">
+    <h2 class="text-center mb-5">Comprehensive Healthcare Management</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100 text-center">
+                <div class="card-body p-4">
+                    <div class="mb-3" style="font-size: 3rem; color: #667eea;">👤</div>
+                    <h4>Patient Management</h4>
+                    <p>Complete patient registration, medical history tracking, and profile management with our intuitive system.</p>
+                    <a href="{% url 'patient-list' %}" class="btn btn-outline-primary mt-2">Manage Patients</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100 text-center">
+                <div class="card-body p-4">
+                    <div class="mb-3" style="font-size: 3rem; color: #667eea;">👨‍⚕️</div>
+                    <h4>Doctor Management</h4>
+                    <p>Manage doctor schedules, specializations, availability, and consultation details efficiently.</p>
+                    <a href="{% url 'doctor-list' %}" class="btn btn-outline-primary mt-2">View Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100 text-center">
+                <div class="card-body p-4">
+                    <div class="mb-3" style="font-size: 3rem; color: #667eea;">📅</div>
+                    <h4>Appointment System</h4>
+                    <p>Streamline appointment booking, tracking, and management with automated scheduling.</p>
+                    <a href="{% url 'appointment-list' %}" class="btn btn-outline-primary mt-2">Book Appointment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Actions Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Quick Actions</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'add-patient' %}" class="card feature-card text-center text-decoration-none h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 2.5rem;">➕</div>
+                        <h5>Add Patient</h5>
+                        <small class="text-muted">Register new patients</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'add-doctor' %}" class="card feature-card text-center text-decoration-none h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 2.5rem;">👨‍⚕️</div>
+                        <h5>Add Doctor</h5>
+                        <small class="text-muted">Register new doctors</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'book-appointment' %}" class="card feature-card text-center text-decoration-none h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 2.5rem;">📅</div>
+                        <h5>Book Appointment</h5>
+                        <small class="text-muted">Schedule consultations</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'search-patients' %}" class="card feature-card text-center text-decoration-none h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 2.5rem;">🔍</div>
+                        <h5>Search</h5>
+                        <small class="text-muted">Find patients & doctors</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Activity Section -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📋 Recent Patients</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for patient in recent_patients|slice:":5" %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ patient.first_name }} {{ patient.last_name }}</h6>
+                                <small>{{ patient.registration_date|date:"M d" }}</small>
+                            </div>
+                            <small class="text-muted">ID: {{ patient.patient_id }} | {{ patient.phone }}</small>
+                        </div>
+                        {% empty %}
+                        <div class="text-center py-3">
+                            <p class="text-muted">No patients registered yet</p>
+                            <a href="{% url 'add-patient' %}" class="btn btn-sm btn-primary">Add First Patient</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card feature-card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">📅 Today's Appointments</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for appointment in today_appointments_list|slice:":5" %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ appointment.patient_name }}</h6>
+                                <span class="badge bg-primary">{{ appointment.time_slot }}</span>
+                            </div>
+                            <small class="text-muted">Dr. {{ appointment.doctor_name }} | {{ appointment.purpose }}</small>
+                        </div>
+                        {% empty %}
+                        <div class="text-center py-3">
+                            <p class="text-muted">No appointments scheduled for today</p>
+                            <a href="{% url 'book-appointment' %}" class="btn btn-sm btn-success">Book Appointment</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="container my-5">
+    <div class="card feature-card">
+        <div class="card-body text-center py-5">
+            <h2>Ready to Streamline Your Hospital Operations?</h2>
+            <p class="lead">Join hundreds of healthcare providers using our platform to deliver better patient care.</p>
+            <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+                <a href="{% url 'add-patient' %}" class="btn btn-primary btn-lg">Register First Patient</a>
+                <a href="{% url 'add-doctor' %}" class="btn btn-outline-primary btn-lg">Add New Doctor</a>
+                <a href="{% url 'book-appointment' %}" class="btn btn-outline-success btn-lg">Book Appointment</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Change Appointment | Hospital Management Admin{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:hospital_app_appointment_changelist' %}">Appointments</a>
+    &rsaquo; Change Appointment
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <h2>Change Appointment</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <fieldset class="module aligned">
+            <h3>Appointment Information</h3>
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="appointment_date">Appointment Date:</label>
+                    <input type="date" id="appointment_date" name="appointment_date" value="{{ appointment.appointment_date }}" required>
+                </div>
+                <div class="fieldBox">
+                    <label for="time_slot">Time Slot:</label>
+                    <input type="text" id="time_slot" name="time_slot" value="{{ appointment.time_slot }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="purpose">Purpose:</label>
+                    <input type="text" id="purpose" name="purpose" value="{{ appointment.purpose }}" required>
+                </div>
+                <div class="fieldBox">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="Scheduled" {% if appointment.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                        <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Completed</option>
+                        <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="fieldBox">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes" name="notes" rows="3">{{ appointment.notes }}</textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="submit-row">
+            <input type="submit" value="Save" class="default">
+            <a href="{% url 'admin:hospital_app_appointment_changelist' %}" class="cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

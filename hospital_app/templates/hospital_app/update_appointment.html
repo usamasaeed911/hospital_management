@@ -1,0 +1,102 @@
+{% extends 'hospital_app/base.html' %}
+{% load static %}
+
+{% block title %}Update Appointment - Hospital Management{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="fas fa-calendar-alt"></i> Update Appointment</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="patient_id" class="form-label">Patient *</label>
+                                    <select class="form-control" id="patient_id" name="patient_id" required>
+                                        <option value="">Select Patient</option>
+                                        {% for patient in patients %}
+                                        <option value="{{ patient._id }}" {% if patient._id|stringformat:"s" == appointment.patient_id|stringformat:"s" %}selected{% endif %}>
+                                            {{ patient.first_name }} {{ patient.last_name }} ({{ patient.patient_id }})
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="doctor_id" class="form-label">Doctor *</label>
+                                    <select class="form-control" id="doctor_id" name="doctor_id" required>
+                                        <option value="">Select Doctor</option>
+                                        {% for doctor in doctors %}
+                                        <option value="{{ doctor._id }}" {% if doctor._id|stringformat:"s" == appointment.doctor_id|stringformat:"s" %}selected{% endif %}>
+                                            Dr. {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="appointment_date" class="form-label">Appointment Date *</label>
+                                    <input type="date" class="form-control" id="appointment_date" name="appointment_date"
+                                           value="{{ appointment.appointment_date }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="time_slot" class="form-label">Time Slot *</label>
+                                    <select class="form-control" id="time_slot" name="time_slot" required>
+                                        <option value="">Select Time Slot</option>
+                                        <option value="09:00 AM - 10:00 AM" {% if appointment.time_slot == '09:00 AM - 10:00 AM' %}selected{% endif %}>09:00 AM - 10:00 AM</option>
+                                        <option value="10:00 AM - 11:00 AM" {% if appointment.time_slot == '10:00 AM - 11:00 AM' %}selected{% endif %}>10:00 AM - 11:00 AM</option>
+                                        <option value="11:00 AM - 12:00 PM" {% if appointment.time_slot == '11:00 AM - 12:00 PM' %}selected{% endif %}>11:00 AM - 12:00 PM</option>
+                                        <option value="02:00 PM - 03:00 PM" {% if appointment.time_slot == '02:00 PM - 03:00 PM' %}selected{% endif %}>02:00 PM - 03:00 PM</option>
+                                        <option value="03:00 PM - 04:00 PM" {% if appointment.time_slot == '03:00 PM - 04:00 PM' %}selected{% endif %}>03:00 PM - 04:00 PM</option>
+                                        <option value="04:00 PM - 05:00 PM" {% if appointment.time_slot == '04:00 PM - 05:00 PM' %}selected{% endif %}>04:00 PM - 05:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="purpose" class="form-label">Purpose *</label>
+                            <input type="text" class="form-control" id="purpose" name="purpose"
+                                   value="{{ appointment.purpose }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3">{{ appointment.notes }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="Scheduled" {% if appointment.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                                <option value="Confirmed" {% if appointment.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'appointment-list' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-warning">Update Appointment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

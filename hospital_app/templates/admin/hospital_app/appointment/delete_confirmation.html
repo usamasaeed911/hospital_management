@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Delete Appointment | Hospital Management Admin{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:hospital_app_appointment_changelist' %}">Appointments</a>
+    &rsaquo; Delete Appointment
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <h2>Are you sure you want to delete the appointment "{{ appointment.appointment_id }}"?</h2>
+
+    <p>This action cannot be undone.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="submit-row">
+            <input type="submit" value="Yes, I'm sure" class="default">
+            <a href="{% url 'admin:hospital_app_appointment_changelist' %}" class="cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
