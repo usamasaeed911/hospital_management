@@ -101,7 +101,7 @@ tzdata==2025.2
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/usamasaeed911/hospital_management
 cd hospital_management
 ```
 
